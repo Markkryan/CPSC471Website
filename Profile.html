@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Page Title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #1e3f3b
+        }
+
+        /* Style the header */
+        .header {
+            padding: 80px;
+            text-align: center;
+            background: #039c8a;
+            color: rgb(201, 25, 25);
+        }
+
+        /* Increase the font size of the h1 element */
+        .header h1 {
+            font-size: 40px;
+        }
+
+        /* Style the top navigation bar */
+        .navbar {
+            overflow: hidden; /* Hide overflow */
+            background-color: #333; /* Dark background color */
+        }
+
+        /* Style the navigation bar links */
+        .navbar a {
+            float: left; /* Make sure that the links stay side-by-side */
+            display: block; /* Change the display to block, for responsive reasons (see below) */
+            color: white; /* White text color */
+            text-align: center; /* Center the text */
+            padding: 14px 20px; /* Add some padding */
+            text-decoration: none; /* Remove underline */
+        }
+
+        /* Right-aligned link */
+        .navbar a.right {
+            float: right; /* Float a link to the right */
+        }
+
+        /* Change color on hover/mouse-over */
+        .navbar a:hover {
+            background-color: #ddd; /* Grey background color */
+            color: black; /* Black text color */
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Workout Site</h1>
+    <p>A CPSC 471 Project</p>
+</div>
+
+
+<div class="navbar">
+    <a href="Profile.html">Profile</a>
+    <a href="Schedule.html">Schedule</a>
+    <a href="#">Workout</a>
+    <a href="#">Gym</a>
+    <a href="#">Search</a>
+    <a href="#" class="right">Login</a>
+</div>
+
+
+</body>
+</html>
