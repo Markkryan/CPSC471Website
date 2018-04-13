@@ -45,7 +45,6 @@ html {
 
 body {
     background-color: #00000f;  <!--consider changing this to 12 or 10-->
-    background-image: url("chris_fight6.jpg");
     background-size: 100%;
     background-repeat: no-repeat;
 }
@@ -139,9 +138,12 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-
-
-
+.header {
+    padding: 80px; /* some padding */
+    text-align: center; /* center the text */
+    background: #1abc9c; /* green background */
+    color: white; /* white text color */
+}
 
 
 
