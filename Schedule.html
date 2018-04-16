@@ -45,11 +45,65 @@
     </ul>
 </div>
 
-<div>
+<?php
+
+session_start();
+
+?>
+
+<?php 
+
+            $db_username = "root";
+            $db_password = "";
+            $server_name = "127.0.0.1";
+            $db_name = "workout";
+            $username = $_SESSION['user'];
+
+            if(isset($_SESSION['user'])){
+                try {
+                    $conn = new PDO("mysql:host=$server_name;dbname=$db_name", $db_username, $db_password);
+                    // set the PDO error mode to exception
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            //echo "Connected successfully";
+            $sql = "SELECT Workout_Name FROM Wokrout W WHERE '$username' = W.Username";
+            $data = $conn -> prepare($sql);
+            $data->execute();
+            $workouts = $data -> fetch(PDO::FETCH_ASSOC);
+            }
+            catch(PDOException $e) {
+            echo "Connection failed: " . $e->getMessage();
+            }
+            } else {
+            header("Location: Login.html");
+            exit;
+            }
+            
+        ?>
+
+
+<div id="schedule">
+  <h1 style="color:white;">Schedule Workout</h1>
+  <form name="schedule_on" method="POST" action="Schedule.php" accept-charset="utf-8">
+
+
     Schedule Workout:
-    <select>
-        <option></option>
+    <select name="Workout">
+        <?php foreach ($workouts as $row):?>
+            <option><?=$row['Workout_Name']?></option>
+        <?php endforeach?>    
     </select>
+    On 
+
+    <select name="Day">
+        <option>Monday</option>
+        <option>Tuesday</option>
+        <option>Wednesday</option>
+        <option>Thursday</option>
+        <option>Friday</option>
+        <option>Saturday</option>
+        <option>Sunday</option>        
+    </select>
+  </form>  
 </div>
 
 <div>
@@ -111,7 +165,6 @@
         <tr>
 
             <?php
-            session_start();
             $db_username = "root";
             $db_password = "";
             $server_name = "127.0.0.1";
