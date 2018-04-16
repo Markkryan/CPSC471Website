@@ -1,141 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html>
+  <head>
+    <title>Place searches</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <script>
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
-    <link rel="manifest" href="../site.webmanifest">
-    <link rel="apple-touch-icon" href="../icon.png">
-    <!-- Place favicon.ico in the root directory -->
+      var map;
+      var infowindow;
 
-    <link rel="stylesheet" href="../css/normalize.css">
-    <link rel="stylesheet" href="../css/main.css">
-</head>
-</head>
-<body>
+      function initMap() {
+        var pyrmont = {lat: -33.867, lng: 151.195};
 
-<div class="header">
-    <h1>Workout Site</h1>
-    <p>A CPSC 471 Project</p>
-</div>s
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: pyrmont,
+          zoom: 15
+        });
 
-
-<div id="navigation">
-    <ul>
-        <li><a href="index.html" style="font-family:'Lucida Sans Unicode';">Main</a></li>
-        <li style="color: white">|</li>
-        <li><a href="Profile.html" style="font-family:'Lucida Sans Unicode';">Profile</a></li>
-        <li style="color: white">|</li>
-        <li><a href="Search.html" style="font-family:'Lucida Sans Unicode';">Search</a></li>
-        <li style="color: white">|</li>
-        <li><a href="Workout.html" style="font-family:'Lucida Sans Unicode';">Workout</a></li>
-        <li style="color: white">|</li>
-        <li><a href="Schedule.html" style="font-family:'Lucida Sans Unicode';">Schedule</a></li>
-        <li style="color: white">|</li>
-        <li><a href="Login.html" style="font-family:'Lucida Sans Unicode';">Login</a></li>
-
-
-
-    </ul>
-</div>
-
-
-
-<div id="map" style="width:400px;height:400px;background:yellow"></div>
-
-<script>
-
-    var customLabel = {
-            restaurant: {
-              label: 'R'
-            },
-            bar: {
-              label: 'B'
-            }
-          };
-
-
-    function myMap() {
-    var mapOptions = {
-        center: new google.maps.LatLng(51.5, -0.12),
-        zoom: 10,
-        mapTypeId: google.maps.MapTypeId.HYBRID
-    }
-    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-    }
-     var infoWindow = new google.maps.InfoWindow;
-
-  // Change this depending on the name of your PHP or XML file
-  downloadUrl('https://storage.googleapis.com/mapsdevsite/json/mapmarkers2.xml', function(data) {
-    var xml = data.responseXML;
-    var markers = xml.documentElement.getElementsByTagName('marker');
-    Array.prototype.forEach.call(markers, function(markerElem) {
-      var id = markerElem.getAttribute('id');
-      var name = markerElem.getAttribute('name');
-      var address = markerElem.getAttribute('address');
-      var type = markerElem.getAttribute('type');
-      var point = new google.maps.LatLng(
-          parseFloat(markerElem.getAttribute('lat')),
-          parseFloat(markerElem.getAttribute('lng')));
-
-      var infowincontent = document.createElement('div');
-      var strong = document.createElement('strong');
-      strong.textContent = name
-      infowincontent.appendChild(strong);
-      infowincontent.appendChild(document.createElement('br'));
-
-      var text = document.createElement('text');
-      text.textContent = address
-      infowincontent.appendChild(text);
-      var icon = customLabel[type] || {};
-      var marker = new google.maps.Marker({
-        map: map,
-        position: point,
-        label: icon.label
-      });
-      marker.addListener('click', function() {
-        infoWindow.setContent(infowincontent);
-        infoWindow.open(map, marker);
-      });
-    });
-  });
-}
-
-
-
-      function downloadUrl(url, callback) {
-        var request = window.ActiveXObject ?
-            new ActiveXObject('Microsoft.XMLHTTP') :
-            new XMLHttpRequest;
-
-        request.onreadystatechange = function() {
-          if (request.readyState == 4) {
-            request.onreadystatechange = doNothing;
-            callback(request, request.status);
-          }
-        };
-
-        request.open('GET', url, true);
-        request.send(null);
+        infowindow = new google.maps.InfoWindow();
+        var service = new google.maps.places.PlacesService(map);
+        service.nearbySearch({
+          location: pyrmont,
+          radius: 500,
+          type: ['gym']
+        }, callback);
       }
 
-      function doNothing() {}
+      function callback(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          for (var i = 0; i < results.length; i++) {
+            createMarker(results[i]);
+          }
+        }
+      }
+
+      function createMarker(place) {
+        var placeLoc = place.geometry.location;
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.setContent(place.name);
+          infowindow.open(map, this);
+        });
+      }
     </script>
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMMBhCs6j1FNGTRL0E3Lc-WE_gxxo2fcE&callback=myMap"></script>
-
-</body>
-<html>
-
-
-</body>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRvINfC69unD3vSn3Nv25w5b5POG4Tq2g&libraries=places&callback=initMap" async defer></script>
+  </body>
 </html>
-
-<!-- 
-https://developers.google.com/maps/documentation/javascript/places#TextSearchRequests -->
-
-
-<!-- https://developers.google.com/maps/documentation/javascript/mysql-to-maps -->
