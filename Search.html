@@ -41,6 +41,62 @@
 
     </ul>
 </div>
+<?php
+session_start();
+$db_username = "root";
+$db_password = "";
+$server_name = "127.0.0.1";
+$db_name = "testworkout";
+$username = $_SESSION['user']; 
+
+if(isset($_SESSION['user'])){
+    try {
+        $conn = new PDO("mysql:host=$server_name;dbname=$db_name", $db_username, $db_password);
+        // set the PDO error mode to exception
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        //echo "Connected successfully"; 
+        $sql = "SELECT  Exercise_Name, Recommended_Reps, Eq_Name FROM Exercise";
+        $data = $conn -> prepare($sql);
+        $data->execute();
+        $exercise_result = $data -> fetch(PDO::FETCH_ASSOC);
+    }
+    catch(PDOException $e) {
+        echo "Connection failed: " . $e->getMessage();
+    }
+} else {
+    header("Location: Login.html");
+    exit;
+}
+
+
+?>
+
+<table>
+    <tr>
+        <th>Exercise Name</th>
+        <th>Reps</th> 
+        <th>Eq_Name</th>
+      </tr>
+      <?php do { ?>
+      <tr>
+        <td><?php echo $exercise_result['Exercise_Name']; ?></td>
+        <td><?php echo $exercise_result['Recommended_Reps']; ?></td>
+        <td><?php echo $exercise_result['Eq_Name']; ?></td>
+      </tr>
+      <?php } while($exercise_result = $data -> fetch(PDO::FETCH_ASSOC))  ?>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+
+
+</table>
 
 
 </body>
