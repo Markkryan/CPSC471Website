@@ -39,6 +39,7 @@
     </ul>
 </div>
 
+
 <?php
 session_start();
 $db_username = "root";
@@ -53,7 +54,7 @@ if(isset($_SESSION['user'])){
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         //echo "Connected successfully"; 
-        $sql = "SELECT  U_Name, Gender, Height, Weight, BMI, Age  FROM  user  U WHERE '$username' = U.Username";
+        $sql = "SELECT  U_Name, Height, Weight, BMI, Age, U_Password FROM  user  U WHERE '$username' = U.Username";
         $data = $conn -> prepare($sql);
         $data->execute();
         $profile_result = $data -> fetch(PDO::FETCH_ASSOC);
@@ -69,16 +70,18 @@ if(isset($_SESSION['user'])){
 
 ?>
 
-<div id="profile">
-    <p>Name: </p>  <?php echo $profile_result['U_Name']; ?> 
-    <p>Gender: </p> <?php echo $profile_result['Gender']; ?>
-    <p>Height: </p> <?php echo $profile_result['Height']; ?> 
-    <p>Weight: </p> <?php echo $profile_result['Weight']; ?>
-    <p>BMI: </p> <?php echo $profile_result['BMI']; ?>
-    <p>Age: </p> <?php echo $profile_result['Age']; ?> <br>
-    <a href="Edit.html">Edit Profile</a> <br>
-    <a href="Delete.php">Delete Profile</a> <br>
-    <a href="Logout.php">Logout</a>
+
+<div id="newform">
+    <h1>Edit Profle</h1>
+    <form name="edit" method="POST" action="Edit.php" accept-charset="utf-8">
+        <p>Password <input name="password" type="password" maxlength="30" value="<?php echo $profile_result['U_Password']; ?>"/></p>
+        <p>Name <input name="name" type="text" maxlength="30" value="<?php echo $profile_result['U_Name']; ?>" /></p>
+        <p>Age <input name="age" type="number" value="<?php echo $profile_result['Age']; ?>" /></p>
+        <p>Height <input name="height" type="number" value="<?php echo $profile_result['Height']; ?>" /></p>
+        <p>Weight <input name="weight" type="number" value="<?php echo $profile_result['Weight']; ?>" /></p>
+        <p><input type="submit" name="edit" value="Edit"></p>
+    </form>
 </div>
+
 </body>
 </html>
