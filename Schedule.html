@@ -11,9 +11,9 @@
     <link rel="apple-touch-icon" href="icon.png">
     <!-- Place favicon.ico in the root directory -->
 
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/schedule.css">
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="schedule.css">
 </head>
 </head>
 <body>
@@ -36,12 +36,59 @@
         <li style="color: white">|</li>
         <li><a href="Schedule.html" style="font-family:'Lucida Sans Unicode';">Schedule</a></li>
         <li style="color: white">|</li>
-        <li><a href="Login.html" style="font-family:'Lucida Sans Unicode';">Login</a></li>
+        <li><a href="Login.html" style="font-family:'Lucida Sans Unicode';">Login</a></li> 
+        <li style="color: white">|</li>
+        <li><a href="Gym.html" style="font-family:'Lucida Sans Unicode';">Gym</a></li>
 
 
 
     </ul>
 </div>
+
+<?php
+session_start();
+$db_username = "root";
+$db_password = "";
+$server_name = "127.0.0.1";
+$db_name = "workout";
+$username = $_SESSION['user']; 
+$day = "Monday";
+
+if(isset($_SESSION['user'])){
+    try {
+        $conn = new PDO("mysql:host=$server_name;dbname=$db_name", $db_username, $db_password);
+        // set the PDO error mode to exception
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        //echo "Connected successfully"; 
+        $sql = "SELECT Workout_Name FROM Scheduled S WHERE '$username' = S.Username AND DAY = '$day'";
+        $data = $conn -> prepare($sql);
+        $data->execute();
+        $schedule_result = $data -> fetch(PDO::FETCH_ASSOC);
+    }
+    catch(PDOException $e) {
+        echo "Connection failed: " . $e->getMessage();
+    }
+} else {
+    header("Location: Login.html");
+    exit;
+}
+
+
+?>
+
+
+<!-- <div id="profile">
+    <p>Name: </p>  <?php echo $profile_result['U_Name']; ?> 
+    <p>Gender: </p> <?php echo $profile_result['Gender']; ?>
+    <p>Height: </p> <?php echo $profile_result['Height']; ?> 
+    <p>Weight: </p> <?php echo $profile_result['Weight']; ?>
+    <p>BMI: </p> <?php echo $profile_result['BMI']; ?>
+    <p>Age: </p> <?php echo $profile_result['Age']; ?> <br>
+    <a href="Edit.html">Edit Profile</a> <br>
+    <a href="Delete.php">Delete Profile</a> <br>
+    <a href="Logout.php">Logout</a>
+</div> -->
+
 
 <div>
 <table>
@@ -87,7 +134,7 @@
     </thead>
     <tbody>
     <tr>
-        <td class="hour" rowspan="4"><span>1:00</span></td>
+        <td class="hour" rowspan="4">Body Part<span></span></td>
         <td></td>
         <td></td>
         <td></td>
@@ -96,51 +143,241 @@
         <td></td>
         <td></td>
     </tr>
+
+
+
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td class="hour" rowspan="4"><span>2:00</span></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+    
+         <?php
+            session_start();
+            $db_username = "root";
+            $db_password = "";
+            $server_name = "127.0.0.1";
+            $db_name = "workout";
+            $username = $_SESSION['user']; 
+            $day = "Monday";
+
+            if(isset($_SESSION['user'])){
+                try {
+                    $conn = new PDO("mysql:host=$server_name;dbname=$db_name", $db_username, $db_password);
+                    // set the PDO error mode to exception
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    //echo "Connected successfully"; 
+                    $sql = "SELECT BodyPart FROM Schedule S WHERE '$username' = S.Username AND DAY = '$day'";
+                    $data = $conn -> prepare($sql);
+                    $data->execute();
+                    $schedule_result = $data -> fetch(PDO::FETCH_ASSOC);
+                }
+                catch(PDOException $e) {
+                    echo "Connection failed: " . $e->getMessage();
+                }
+            } else {
+                header("Location: Login.html");
+                exit;
+            }
+
+
+            ?>
+
+        <td><?php echo $body_part['BodyPart']; </td>
+
+         <?php
+            session_start();
+            $db_username = "root";
+            $db_password = "";
+            $server_name = "127.0.0.1";
+            $db_name = "workout";
+            $username = $_SESSION['user']; 
+            $day = "Tuesday";
+
+            if(isset($_SESSION['user'])){
+                try {
+                    $conn = new PDO("mysql:host=$server_name;dbname=$db_name", $db_username, $db_password);
+                    // set the PDO error mode to exception
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    //echo "Connected successfully"; 
+                    $sql = "SELECT BodyPart FROM Schedule S WHERE '$username' = S.Username AND DAY = '$day'";
+                    $data = $conn -> prepare($sql);
+                    $data->execute();
+                    $schedule_result = $data -> fetch(PDO::FETCH_ASSOC);
+                }
+                catch(PDOException $e) {
+                    echo "Connection failed: " . $e->getMessage();
+                }
+            } else {
+                header("Location: Login.html");
+                exit;
+            }
+
+
+            ?>
+
+        <td><?php echo $body_part['BodyPart']; </td>
+
+         <?php
+            session_start();
+            $db_username = "root";
+            $db_password = "";
+            $server_name = "127.0.0.1";
+            $db_name = "workout";
+            $username = $_SESSION['user']; 
+            $day = "Wednesday";
+
+            if(isset($_SESSION['user'])){
+                try {
+                    $conn = new PDO("mysql:host=$server_name;dbname=$db_name", $db_username, $db_password);
+                    // set the PDO error mode to exception
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    //echo "Connected successfully"; 
+                    $sql = "SELECT BodyPart FROM Schedule S WHERE '$username' = S.Username AND DAY = '$day'";
+                    $data = $conn -> prepare($sql);
+                    $data->execute();
+                    $schedule_result = $data -> fetch(PDO::FETCH_ASSOC);
+                }
+                catch(PDOException $e) {
+                    echo "Connection failed: " . $e->getMessage();
+                }
+            } else {
+                header("Location: Login.html");
+                exit;
+            }
+
+
+            ?>
+
+        <td><?php echo $body_part['BodyPart']; </td>
+
+         <?php
+            session_start();
+            $db_username = "root";
+            $db_password = "";
+            $server_name = "127.0.0.1";
+            $db_name = "workout";
+            $username = $_SESSION['user']; 
+            $day = "Thursday";
+
+            if(isset($_SESSION['user'])){
+                try {
+                    $conn = new PDO("mysql:host=$server_name;dbname=$db_name", $db_username, $db_password);
+                    // set the PDO error mode to exception
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    //echo "Connected successfully"; 
+                    $sql = "SELECT BodyPart FROM Schedule S WHERE '$username' = S.Username AND DAY = '$day'";
+                    $data = $conn -> prepare($sql);
+                    $data->execute();
+                    $schedule_result = $data -> fetch(PDO::FETCH_ASSOC);
+                }
+                catch(PDOException $e) {
+                    echo "Connection failed: " . $e->getMessage();
+                }
+            } else {
+                header("Location: Login.html");
+                exit;
+            }
+
+
+            ?>
+
+        <td><?php echo $body_part['BodyPart']; </td>
+
+         <?php
+            session_start();
+            $db_username = "root";
+            $db_password = "";
+            $server_name = "127.0.0.1";
+            $db_name = "workout";
+            $username = $_SESSION['user']; 
+            $day = "Friday";
+
+            if(isset($_SESSION['user'])){
+                try {
+                    $conn = new PDO("mysql:host=$server_name;dbname=$db_name", $db_username, $db_password);
+                    // set the PDO error mode to exception
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    //echo "Connected successfully"; 
+                    $sql = "SELECT BodyPart FROM Schedule S WHERE '$username' = S.Username AND DAY = '$day'";
+                    $data = $conn -> prepare($sql);
+                    $data->execute();
+                    $schedule_result = $data -> fetch(PDO::FETCH_ASSOC);
+                }
+                catch(PDOException $e) {
+                    echo "Connection failed: " . $e->getMessage();
+                }
+            } else {
+                header("Location: Login.html");
+                exit;
+            }
+
+
+            ?>
+
+        <td><?php echo $body_part['BodyPart']; </td>
+
+         <?php
+            session_start();
+            $db_username = "root";
+            $db_password = "";
+            $server_name = "127.0.0.1";
+            $db_name = "workout";
+            $username = $_SESSION['user']; 
+            $day = "Saturday";
+
+            if(isset($_SESSION['user'])){
+                try {
+                    $conn = new PDO("mysql:host=$server_name;dbname=$db_name", $db_username, $db_password);
+                    // set the PDO error mode to exception
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    //echo "Connected successfully"; 
+                    $sql = "SELECT BodyPart FROM Schedule S WHERE '$username' = S.Username AND DAY = '$day'";
+                    $data = $conn -> prepare($sql);
+                    $data->execute();
+                    $schedule_result = $data -> fetch(PDO::FETCH_ASSOC);
+                }
+                catch(PDOException $e) {
+                    echo "Connection failed: " . $e->getMessage();
+                }
+            } else {
+                header("Location: Login.html");
+                exit;
+            }
+
+
+            ?>
+
+        <td><?php echo $body_part['BodyPart'];</td>
+
+         <?php
+            session_start();
+            $db_username = "root";
+            $db_password = "";
+            $server_name = "127.0.0.1";
+            $db_name = "workout";
+            $username = $_SESSION['user']; 
+            $day = "Sunday";
+
+            if(isset($_SESSION['user'])){
+                try {
+                    $conn = new PDO("mysql:host=$server_name;dbname=$db_name", $db_username, $db_password);
+                    // set the PDO error mode to exception
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    //echo "Connected successfully"; 
+                    $sql = "SELECT BodyPart FROM Schedule S WHERE '$username' = S.Username AND DAY = '$day'";
+                    $data = $conn -> prepare($sql);
+                    $data->execute();
+                    $schedule_result = $data -> fetch(PDO::FETCH_ASSOC);
+                }
+                catch(PDOException $e) {
+                    echo "Connection failed: " . $e->getMessage();
+                }
+            } else {
+                header("Location: Login.html");
+                exit;
+            }
+
+
+            ?>
+
+        <td><?php echo $body_part['BodyPart'];</td>
     </tr>
     <tr>
         <td></td>
@@ -161,8 +398,42 @@
         <td></td>
     </tr>
 
+
+    <?php
+    session_start();
+    $db_username = "root";
+    $db_password = "";
+    $server_name = "127.0.0.1";
+    $db_name = "workout";
+    $username = $_SESSION['user']; 
+    $day = "Monday";
+
+    if(isset($_SESSION['user'])){
+        try {
+            $conn = new PDO("mysql:host=$server_name;dbname=$db_name", $db_username, $db_password);
+            // set the PDO error mode to exception
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            //echo "Connected successfully"; 
+            $sql = "SELECT Workout_Name FROM Scheduled S WHERE '$username' = S.Username AND DAY = '$day'";
+            $data = $conn -> prepare($sql);
+            $data->execute();
+            $schedule_result = $data -> fetch(PDO::FETCH_ASSOC);
+        }
+        catch(PDOException $e) {
+            echo "Connection failed: " . $e->getMessage();
+        }
+    } else {
+        header("Location: Login.html");
+        exit;
+    }
+
+
+    ?>
+
+
+
     <tr>
-        <td class="hour" rowspan="4"><span>3:00</span></td>
+        <td class="hour" rowspan="4"><span>Wokrout</span></td>
         <td></td>
         <td></td>
         <td></td>
@@ -172,198 +443,205 @@
         <td></td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td class="hour" rowspan="4"><span>4:00</span></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td class="hour" rowspan="4"><span>5:00</span></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td class="hour" rowspan="4"><span>6:00</span></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td class="hour" rowspan="4"><span>7:00</span></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td class="hour" rowspan="4"><span>8:00</span></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><?php echo $schedule_result['Workout']; </td>
+
+     <?php
+        session_start();
+        $db_username = "root";
+        $db_password = "";
+        $server_name = "127.0.0.1";
+        $db_name = "workout";
+        $username = $_SESSION['user']; 
+        $day = "Tuesday";
+
+        if(isset($_SESSION['user'])){
+            try {
+                $conn = new PDO("mysql:host=$server_name;dbname=$db_name", $db_username, $db_password);
+                // set the PDO error mode to exception
+                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                //echo "Connected successfully"; 
+                $sql = "SELECT Workout_Name FROM Scheduled S WHERE '$username' = S.Username AND DAY = '$day'";
+                $data = $conn -> prepare($sql);
+                $data->execute();
+                $schedule_result = $data -> fetch(PDO::FETCH_ASSOC);
+            }
+            catch(PDOException $e) {
+                echo "Connection failed: " . $e->getMessage();
+            }
+        } else {
+            header("Location: Login.html");
+            exit;
+        }
+
+
+        ?>
+
+        <td><?php echo $schedule_result['Workout'];</td>
+          <?php
+            session_start();
+            $db_username = "root";
+            $db_password = "";
+            $server_name = "127.0.0.1";
+            $db_name = "workout";
+            $username = $_SESSION['user']; 
+            $day = "Wednesday";
+
+            if(isset($_SESSION['user'])){
+                try {
+                    $conn = new PDO("mysql:host=$server_name;dbname=$db_name", $db_username, $db_password);
+                    // set the PDO error mode to exception
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    //echo "Connected successfully"; 
+                    $sql = "SELECT Workout_Name FROM Scheduled S WHERE '$username' = S.Username AND DAY = '$day'";
+                    $data = $conn -> prepare($sql);
+                    $data->execute();
+                    $schedule_result = $data -> fetch(PDO::FETCH_ASSOC);
+                }
+                catch(PDOException $e) {
+                    echo "Connection failed: " . $e->getMessage();
+                }
+            } else {
+                header("Location: Login.html");
+                exit;
+            }
+
+
+            ?>
+
+
+        <td><?php echo $schedule_result['Workout'];</td>
+
+         <?php
+            session_start();
+            $db_username = "root";
+            $db_password = "";
+            $server_name = "127.0.0.1";
+            $db_name = "workout";
+            $username = $_SESSION['user']; 
+            $day = "Thrusday";
+
+            if(isset($_SESSION['user'])){
+                try {
+                    $conn = new PDO("mysql:host=$server_name;dbname=$db_name", $db_username, $db_password);
+                    // set the PDO error mode to exception
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    //echo "Connected successfully"; 
+                    $sql = "SELECT Workout_Name FROM Scheduled S WHERE '$username' = S.Username AND DAY = '$day'";
+                    $data = $conn -> prepare($sql);
+                    $data->execute();
+                    $schedule_result = $data -> fetch(PDO::FETCH_ASSOC);
+                }
+                catch(PDOException $e) {
+                    echo "Connection failed: " . $e->getMessage();
+                }
+            } else {
+                header("Location: Login.html");
+                exit;
+            }
+
+
+            ?>
+
+        <td><?php echo $schedule_result['Workout'];</td>
+         <?php
+            session_start();
+            $db_username = "root";
+            $db_password = "";
+            $server_name = "127.0.0.1";
+            $db_name = "workout";
+            $username = $_SESSION['user']; 
+            $day = "Friday";
+
+            if(isset($_SESSION['user'])){
+                try {
+                    $conn = new PDO("mysql:host=$server_name;dbname=$db_name", $db_username, $db_password);
+                    // set the PDO error mode to exception
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    //echo "Connected successfully"; 
+                    $sql = "SELECT Workout_Name FROM Scheduled S WHERE '$username' = S.Username AND DAY = '$day'";
+                    $data = $conn -> prepare($sql);
+                    $data->execute();
+                    $schedule_result = $data -> fetch(PDO::FETCH_ASSOC);
+                }
+                catch(PDOException $e) {
+                    echo "Connection failed: " . $e->getMessage();
+                }
+            } else {
+                header("Location: Login.html");
+                exit;
+            }
+
+
+            ?>
+
+
+        <td><?php echo $schedule_result['Workout'];</td>
+
+         <?php
+            session_start();
+            $db_username = "root";
+            $db_password = "";
+            $server_name = "127.0.0.1";
+            $db_name = "workout";
+            $username = $_SESSION['user']; 
+            $day = "Saturday";
+
+            if(isset($_SESSION['user'])){
+                try {
+                    $conn = new PDO("mysql:host=$server_name;dbname=$db_name", $db_username, $db_password);
+                    // set the PDO error mode to exception
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    //echo "Connected successfully"; 
+                    $sql = "SELECT Workout_Name FROM Scheduled S WHERE '$username' = S.Username AND DAY = '$day'";
+                    $data = $conn -> prepare($sql);
+                    $data->execute();
+                    $schedule_result = $data -> fetch(PDO::FETCH_ASSOC);
+                }
+                catch(PDOException $e) {
+                    echo "Connection failed: " . $e->getMessage();
+                }
+            } else {
+                header("Location: Login.html");
+                exit;
+            }
+
+
+            ?>
+
+        <td><?php echo $schedule_result['Workout'];</td>
+
+         <?php
+            session_start();
+            $db_username = "root";
+            $db_password = "";
+            $server_name = "127.0.0.1";
+            $db_name = "workout";
+            $username = $_SESSION['user']; 
+            $day = "Sunday";
+
+            if(isset($_SESSION['user'])){
+                try {
+                    $conn = new PDO("mysql:host=$server_name;dbname=$db_name", $db_username, $db_password);
+                    // set the PDO error mode to exception
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    //echo "Connected successfully"; 
+                    $sql = "SELECT Workout_Name FROM Scheduled S WHERE '$username' = S.Username AND DAY = '$day'";
+                    $data = $conn -> prepare($sql);
+                    $data->execute();
+                    $schedule_result = $data -> fetch(PDO::FETCH_ASSOC);
+                }
+                catch(PDOException $e) {
+                    echo "Connection failed: " . $e->getMessage();
+                }
+            } else {
+                header("Location: Login.html");
+                exit;
+            }
+
+
+            ?>
+
+        <td><?php echo $schedule_result['Workout'];</td>
     </tr>
     <tr>
         <td></td>
