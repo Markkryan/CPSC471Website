@@ -91,6 +91,13 @@ if(isset($_SESSION['user'])){
 
 
 <div>
+    Schedule Workout: 
+    <select>
+        <option></option>
+    </select>
+</div>
+
+<div>
 <table>
     <thead>
     <tr>
@@ -179,7 +186,7 @@ if(isset($_SESSION['user'])){
 
             ?>
 
-        <td><?php echo $body_part['BodyPart']; </td>
+        <td><?php echo $body_part['BodyPart']; ?></td>
 
          <?php
             session_start();
@@ -212,7 +219,7 @@ if(isset($_SESSION['user'])){
 
             ?>
 
-        <td><?php echo $body_part['BodyPart']; </td>
+        <td><?php echo $body_part['BodyPart'];?> </td>
 
          <?php
             session_start();
@@ -245,7 +252,7 @@ if(isset($_SESSION['user'])){
 
             ?>
 
-        <td><?php echo $body_part['BodyPart']; </td>
+        <td><?php echo $body_part['BodyPart'];?> </td>
 
          <?php
             session_start();
@@ -278,7 +285,7 @@ if(isset($_SESSION['user'])){
 
             ?>
 
-        <td><?php echo $body_part['BodyPart']; </td>
+        <td><?php echo $body_part['BodyPart'];?> </td>
 
          <?php
             session_start();
@@ -311,7 +318,7 @@ if(isset($_SESSION['user'])){
 
             ?>
 
-        <td><?php echo $body_part['BodyPart']; </td>
+        <td><?php echo $body_part['BodyPart'];?> </td>
 
          <?php
             session_start();
@@ -344,7 +351,7 @@ if(isset($_SESSION['user'])){
 
             ?>
 
-        <td><?php echo $body_part['BodyPart'];</td>
+        <td><?php echo $body_part['BodyPart'];?></td>
 
          <?php
             session_start();
@@ -377,7 +384,7 @@ if(isset($_SESSION['user'])){
 
             ?>
 
-        <td><?php echo $body_part['BodyPart'];</td>
+        <td><?php echo $body_part['BodyPart'];?></td>
     </tr>
     <tr>
         <td></td>
@@ -443,7 +450,7 @@ if(isset($_SESSION['user'])){
         <td></td>
     </tr>
     <tr>
-        <td><?php echo $schedule_result['Workout']; </td>
+        <td><?php echo $schedule_result['Workout']; ?></td>
 
      <?php
         session_start();
@@ -476,7 +483,7 @@ if(isset($_SESSION['user'])){
 
         ?>
 
-        <td><?php echo $schedule_result['Workout'];</td>
+        <td><?php echo $schedule_result['Workout'];?></td>
           <?php
             session_start();
             $db_username = "root";
@@ -509,7 +516,7 @@ if(isset($_SESSION['user'])){
             ?>
 
 
-        <td><?php echo $schedule_result['Workout'];</td>
+        <td><?php echo $schedule_result['Workout'];?></td>
 
          <?php
             session_start();
@@ -542,7 +549,7 @@ if(isset($_SESSION['user'])){
 
             ?>
 
-        <td><?php echo $schedule_result['Workout'];</td>
+        <td><?php echo $schedule_result['Workout'];?></td>
          <?php
             session_start();
             $db_username = "root";
@@ -575,7 +582,7 @@ if(isset($_SESSION['user'])){
             ?>
 
 
-        <td><?php echo $schedule_result['Workout'];</td>
+        <td><?php echo $schedule_result['Workout'];?></td>
 
          <?php
             session_start();
@@ -608,7 +615,7 @@ if(isset($_SESSION['user'])){
 
             ?>
 
-        <td><?php echo $schedule_result['Workout'];</td>
+        <td><?php echo $schedule_result['Workout'];?></td>
 
          <?php
             session_start();
@@ -641,7 +648,7 @@ if(isset($_SESSION['user'])){
 
             ?>
 
-        <td><?php echo $schedule_result['Workout'];</td>
+        <td><?php echo $schedule_result['Workout'];?></td>
     </tr>
     <tr>
         <td></td>
