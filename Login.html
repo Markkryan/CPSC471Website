@@ -41,9 +41,16 @@
 
 <div id="login">
     <h1>Login</h1>
-    <form name="login" method="POST" action="login.php" accept-charset="utf-8">
+    <form name="login" method="POST" action="Login.php" accept-charset="utf-8">
         <p>Username <input name="username" type="text" maxlength="30"/></p>
         <p>Username <input name="password" type="password" maxlength="30"/></p>
+        <?php 
+            if(isset($_POST['login']) && !isset($_SESSION['user'])) {
+        ?>
+                <p><span class=error>Incorrect Username or password</span></p>
+        <?php
+            }
+        ?>
         <p><input type="submit" name="login" value="Submit"></p>
     </form>
 </div>
