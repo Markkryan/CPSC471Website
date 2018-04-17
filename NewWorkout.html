@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Workout</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+<div class="header">
+    <h1>Workout Site</h1>
+    <p>A CPSC 471 Project</p>
+</div>
+
+
+<div id="navigation">
+    <ul>
+        <li><a href="index.html" style="font-family:'Lucida Sans Unicode';">Main</a></li>
+        <li style="color: white">|</li>
+        <li><a href="Profile.html" style="font-family:'Lucida Sans Unicode';">Profile</a></li>
+        <li style="color: white">|</li>
+        <li><a href="html/Search.html" style="font-family:'Lucida Sans Unicode';">Search</a></li>
+        <li style="color: white">|</li>
+        <li><a href="html/Workout.html" style="font-family:'Lucida Sans Unicode';">Workout</a></li>
+        <li style="color: white">|</li>
+        <li><a href="html/Schedule.html" style="font-family:'Lucida Sans Unicode';">Schedule</a></li>
+        <li style="color: white">|</li>
+        <li><a href="html/Login.html" style="font-family:'Lucida Sans Unicode';">Login</a></li>
+        <li style="color: white">|</li>
+        <li><a href="Gym.html" style="font-family:'Lucida Sans Unicode';">Gym</a></li>
+
+
+
+    </ul>
+</div>
+
+<?php
+session_start();
+$db_username = "root";
+$db_password = "";
+$server_name = "127.0.0.1";
+$db_name = "workout";
+    try {
+        $conn = new PDO("mysql:host=$server_name;dbname=$db_name", $db_username, $db_password);
+        // set the PDO error mode to exception
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        //echo "Connected successfully";
+        $sql = "SELECT  Exercise_Name  FROM  exercise";
+        $data = $conn -> prepare($sql);
+        $data->execute();
+        $exNames = $data->fetchAll(PDO::FETCH_ASSOC);
+    }
+    catch(PDOException $e) {
+        echo "Connection failed: " . $e->getMessage();
+    }
+?>
+
+<div>
+<h1 style="color:white;">Create a New Workout</h1>
+
+    <form name = "newWorkout" method ="POST" action="NewWorkout.php" >
+        <input type="text" placeholder="Workout Name" name = "workoutName">
+        <p style="color:white;">Exercise:</p>
+        <select multiple> name = "exercise">
+            <?php foreach ($exNames as $row):?>
+                    <option><?=$row["Exercise_Name"]?></option>
+            <?php endforeach?>
+        </select>
+        <input type= "submit" name = "create" value ="create">
+        <input type= "submit" placeholder="Add" value ="add" name ="add">
+    </form>
+
+
+</div>
+</body>
+</html>
