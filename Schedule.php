@@ -6,10 +6,9 @@ $server_name = "127.0.0.1";
 $db_name = "workout";
 $username = $_SESSION['user'];
 $workout = $_POST['Workout'];
-$day = $_POST['password'];
+$day = $_POST['Day'];
 
 
-if(isset($_POST['submit'])) {
     try {
         $conn = new PDO("mysql:host=$server_name;dbname=$db_name", $db_username, $db_password);
         // set the PDO error mode to exception
@@ -17,10 +16,11 @@ if(isset($_POST['submit'])) {
         //echo "Connected successfully";
         $sql = "INSERT INTO scheduled_on (Username, Workout_Name, Day) VALUES ('$username', '$workout', '$day')";
         $conn->exec($sql);
-        
+
     } catch(PDOException $e) {
         echo "Connection failed: " . $e->getMessage();
     }
-}
 
+header('Location: Schedule.html');
+exit;
 ?>

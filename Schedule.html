@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="schedule.css">
 </head>
-</head>
+
 <body>
 
 <div class="header">
@@ -51,7 +51,7 @@ session_start();
 
 ?>
 
-<?php 
+<?php
 
             $db_username = "root";
             $db_password = "";
@@ -64,48 +64,48 @@ session_start();
                     $conn = new PDO("mysql:host=$server_name;dbname=$db_name", $db_username, $db_password);
                     // set the PDO error mode to exception
                     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            //echo "Connected successfully";
-            $sql = "SELECT Workout_Name FROM Workout W WHERE '$username' = W.Username";
-            $data = $conn -> prepare($sql);
-            $data->execute();
-            $workouts = $data -> fetchAll(PDO::FETCH_ASSOC);
-            }
-            catch(PDOException $e) {
-            echo "Connection failed: " . $e->getMessage();
-            }
-            } else {
-            header("Location: Login.html");
-            exit;
-            }
-            
-        ?>
+//echo "Connected successfully";
+$sql = "SELECT Workout_Name FROM Workout W WHERE '$username' = W.Username";
+$data = $conn -> prepare($sql);
+$data->execute();
+$workouts = $data -> fetchAll(PDO::FETCH_ASSOC);
+}
+catch(PDOException $e) {
+echo "Connection failed: " . $e->getMessage();
+}
+} else {
+header("Location: Login.html");
+exit;
+}
+
+?>
 
 
 <div id="schedule">
-  <h1 style="color:white;">Schedule Workout</h1>
-  <form name="schedule" method="POST" action="Schedule.php" accept-charset="utf-8">
+    <h1 style="color:white;">Schedule Workout</h1>
+    <form name="schedule" method="POST" action="Schedule.php" accept-charset="utf-8">
 
 
-    Schedule Workout:
-    <select name="Workout">
-        <?php foreach ($workouts as $row):?>
+        Schedule Workout:
+        <select name="Workout">
+            <?php foreach ($workouts as $row):?>
             <option><?=$row['Workout_Name']?></option>
-        <?php endforeach?>    
-    </select>
-    On 
+            <?php endforeach?>
+        </select>
+        On
 
-    <select name="Day">
-        <option>Monday</option>
-        <option>Tuesday</option>
-        <option>Wednesday</option>
-        <option>Thursday</option>
-        <option>Friday</option>
-        <option>Saturday</option>
-        <option>Sunday</option>        
-    </select>
+        <select name="Day">
+            <option>Monday</option>
+            <option>Tuesday</option>
+            <option>Wednesday</option>
+            <option>Thursday</option>
+            <option>Friday</option>
+            <option>Saturday</option>
+            <option>Sunday</option>
+        </select>
 
-    <p><input type="submit" name="schedule" value="Schedule"></p>
-  </form>  
+        <p><input type="submit" name="schedule" value="Schedule"></p>
+    </form>
 </div>
 
 <div>
